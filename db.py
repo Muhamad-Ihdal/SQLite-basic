@@ -13,6 +13,15 @@ def creat_table():
         email TEXT UNIQUE
                    )
     """)
+
+    cursor.execute("""
+    CREAT TABLE IF NOT EXISTS orders(
+        id INTEGER PIMARY KEY
+        produck_name TEXT NOT NULL
+        price TEXT NOT NULL
+        FOREIGEN KEY (user_id) REFERENCES users(id)
+                    )
+    """)
     
     conn.commit()
     conn.close()
