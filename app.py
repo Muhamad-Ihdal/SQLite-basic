@@ -1,4 +1,4 @@
-from db import creat_table,add_user,get_users,delete_user,update_user,add_order
+from db import creat_table,add_user,get_users,delete_user,update_user,add_order,get_all_order
 creat_table()
 def normal(text:str):
     return text.strip().lower()
@@ -9,14 +9,15 @@ def gavalid():
     lj()
 def input_angka(teks="Masukan angka: "):
     while True:
-        angka = input(f"{teks}")
+        angka = input(f"{teks}").strip().capitalize()
         if angka.isdigit():
             return int(angka)
         gavalid()
 def input_str(teks="Masukan teks: "):
-    if teks.strip() == '':
+    x = input(f"{teks}")
+    if x.strip() == '':
         return None
-    return teks
+    return x
 
                 
 def tambah_user():
@@ -83,6 +84,19 @@ def tambah_orderan():
     else:
         print(f"data user dengan id: {id_user},tidak di temukan")
 
+def tampilkan_semua_user_serta_order():
+    data = get_all_order()
+    user = 'kosong'
+    for indx,i in enumerate(data):
+        if i[0] != user :
+            user = i[0]
+            print(f"\n{indx+1}. User: {user}")
+    
+        if not (i[1] is None):
+            print(f"- {i[1]} ({i[3]})")
+        else:
+            print("- Tidak ada orderan")
+
 
 def main():
     while True:
@@ -95,7 +109,7 @@ def main():
 6. Tampilkan semua user serta orderannya
 7. Tampilkan semua data user yang memiliki orderan
 8. Hapus orderan
-8. Keluar
+9. Keluar
     """)
         pilihan = normal(input("Input pilihan: "))
 
@@ -108,12 +122,14 @@ def main():
         elif pilihan == '4':
             hapus_user()
         elif pilihan == '5':
-            pass
+            tambah_orderan()
         elif pilihan == '6':
-            pass
+            tampilkan_semua_user_serta_order()
         elif pilihan == '7':
             pass
         elif pilihan == '8':
+            pass
+        elif pilihan == '9':
             return
         else:
             gavalid()

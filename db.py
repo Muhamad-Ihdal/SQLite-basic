@@ -1,7 +1,5 @@
 import sqlite3
 
-
-
 def creat_table(): 
     conn = sqlite3.connect("users.db")
     cursor = conn.cursor()
@@ -57,7 +55,7 @@ def add_order(user_id,product_name,price):
 
     try:
         cursor.execute(
-            "INSERT INTO orders (user_id,product_name,price) VALUES (?,?,?)",
+            "INSERT INTO orders (user_id,produck_name,price) VALUES (?,?,?)",
             (user_id,product_name,price)
         )
     except sqlite3.IntegrityError:
@@ -69,6 +67,19 @@ def add_order(user_id,product_name,price):
     conn.close()
     return 1
 
+def get_all_order():
+    conn = sqlite3.connect("users.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+SELECT users.name, orders.produck_name,orders.user_id,orders.price
+FROM users
+LEFT JOIN orders ON orders.user_id = users.id
+""")
+
+    rows = cursor.fetchall()
+    conn.close()
+    return rows
 
 def get_users():
     conn = sqlite3.connect("users.db")
