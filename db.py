@@ -15,11 +15,12 @@ def creat_table():
     """)
 
     cursor.execute("""
-    CREAT TABLE IF NOT EXISTS orders(
-        id INTEGER PIMARY KEY
-        produck_name TEXT NOT NULL
-        price TEXT NOT NULL
-        FOREIGEN KEY (user_id) REFERENCES users(id)
+    CREATE TABLE IF NOT EXISTS orders(
+        id INTEGER PRIMARY KEY,
+        produck_name TEXT NOT NULL,
+        price TEXT NOT NULL,
+        user_id INTEGER,
+        FOREIGN KEY (user_id) REFERENCES users(id)
                     )
     """)
     
