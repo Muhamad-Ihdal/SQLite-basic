@@ -1,5 +1,5 @@
 from db import creat_table,add_user,get_users,delete_user,update_user,add_order,get_all_user_and_order,get_order,delete_order
-creat_table()
+
 def normal(text:str):
     return text.strip().lower()
 def lj():
@@ -9,13 +9,13 @@ def gavalid():
     lj()
 def input_angka(teks="Masukan angka: "):
     while True:
-        angka = input(f"{teks}").strip().capitalize()
+        angka = input(f"{teks}").strip()
         if angka.isdigit():
             return int(angka)
         gavalid()
 def input_str(teks="Masukan teks: "):
     while True:
-        x = input(f"{teks}")
+        x = input(f"{teks}").strip().capitalize()
         if x.strip() == '':
             gavalid()
             continue
@@ -120,6 +120,7 @@ def menghapus_data_orderan():
 
 
 def main():
+    creat_table()
     while True:
         print("""
 1. Tambah user

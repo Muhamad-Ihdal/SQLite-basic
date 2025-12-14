@@ -1,10 +1,21 @@
 import sqlite3
 
-def creat_table(): 
+def foreign_key_on():
     conn = sqlite3.connect("users.db")
-    cursor = conn.cursor()
-    cursor.execute("PRAGMA foreign_keys = ON;")
+    conn.execute("PRAGMA foreign_keys = ON;")
+    return conn
 
+def creat_table(): 
+    conn = foreign_key_on()
+    cursor = conn.cursor()
+    
+
+#     cursor.execute("""
+# DROP TABLE IF EXISTS orders;
+#  """)
+#     cursor.execute("""
+# DROP TABLE IF EXISTS users;
+#  """)
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS users(
         id INTEGER PRIMARY KEY,
@@ -19,7 +30,9 @@ def creat_table():
         produck_name TEXT NOT NULL,
         price INTEGER NOT NULL,
         user_id INTEGER,
-        FOREIGN KEY (user_id) REFERENCES users(id)
+        FOREIGN KEY (user_id) 
+            REFERENCES users(id)
+            ON DELETE CASCADE
                     )
     """)
     
@@ -29,7 +42,7 @@ def creat_table():
 
 
 def add_user(name,email):
-    conn = sqlite3.connect("users.db")
+    conn = foreign_key_on()
     cursor = conn.cursor()
 
 
@@ -49,9 +62,9 @@ def add_user(name,email):
 
 
 def add_order(user_id,product_name,price):
-    conn = sqlite3.connect("users.db")
+    conn = foreign_key_on()
     cursor = conn.cursor()
-    cursor.execute("PRAGMA foreign_keys = ON;")
+
 
     try:
         cursor.execute(
@@ -68,9 +81,9 @@ def add_order(user_id,product_name,price):
     return 1
 
 def get_all_user_and_order():
-    conn = sqlite3.connect("users.db")
+    conn = foreign_key_on()
     cursor = conn.cursor()
-    cursor.execute("PRAGMA foreign_keys = ON;")
+
     cursor.execute("""
 SELECT users.name, orders.produck_name,users.id,orders.price,orders.id
 FROM users
@@ -82,9 +95,9 @@ LEFT JOIN orders ON orders.user_id = users.id
     return rows
 
 def get_order():
-    conn = sqlite3.connect("users.db")
+    conn = foreign_key_on()
     cursor = conn.cursor()
-    cursor.execute("PRAGMA foreign_keys = ON;")
+
 
     cursor.execute("""
 SELECT users.name,orders.produck_name,users.id,orders.price,orders.id
@@ -99,7 +112,7 @@ INNER JOIN orders ON orders.user_id = users.id
 
 
 def get_users():
-    conn = sqlite3.connect("users.db")
+    conn = foreign_key_on()
     cursor = conn.cursor()
 
     cursor.execute("SELECT * FROM users")
@@ -110,9 +123,9 @@ def get_users():
 
 
 def delete_order(id):
-    conn = sqlite3.connect("users.db")
+    conn = foreign_key_on()
     cursor = conn.cursor()
-    cursor.execute("PRAGMA foreign_keys = ON;")
+
 
     cursor.execute(
         "DELETE FROM orders WHERE id = ?",
@@ -126,7 +139,7 @@ def delete_order(id):
 
 
 def delete_user(id):
-    conn = sqlite3.connect("users.db")
+    conn = foreign_key_on()
     cursor = conn.cursor()
 
     cursor.execute(
@@ -142,7 +155,7 @@ def delete_user(id):
 
 
 def update_user(name,email,id:int):
-    conn = sqlite3.connect("users.db")
+    conn = foreign_key_on()
     cursor = conn.cursor()
 
     cursor.execute(
