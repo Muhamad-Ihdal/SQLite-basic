@@ -67,10 +67,10 @@ def add_order(user_id,product_name,price):
     conn.close()
     return 1
 
-def get_all_order():
+def get_all_user_and_order():
     conn = sqlite3.connect("users.db")
     cursor = conn.cursor()
-
+    cursor.execute("PRAGMA foreign_keys = ON;")
     cursor.execute("""
 SELECT users.name, orders.produck_name,orders.user_id,orders.price
 FROM users
@@ -80,6 +80,23 @@ LEFT JOIN orders ON orders.user_id = users.id
     rows = cursor.fetchall()
     conn.close()
     return rows
+
+def get_order():
+    conn = sqlite3.connect("users.db")
+    cursor = conn.cursor()
+    cursor.execute("PRAGMA foreign_keys = ON;")
+
+    cursor.execute("""
+SELECT users.name,orders.produck_name,orders.user_id,orders.price
+FROM users
+INNER JOIN orders ON orders.user_id = users.id
+""")
+
+    rows = cursor.fetchall()
+    conn.close()
+    return rows
+
+
 
 def get_users():
     conn = sqlite3.connect("users.db")

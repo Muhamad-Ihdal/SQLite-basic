@@ -1,4 +1,4 @@
-from db import creat_table,add_user,get_users,delete_user,update_user,add_order,get_all_order
+from db import creat_table,add_user,get_users,delete_user,update_user,add_order,get_all_user_and_order,get_order
 creat_table()
 def normal(text:str):
     return text.strip().lower()
@@ -85,18 +85,27 @@ def tambah_orderan():
         print(f"data user dengan id: {id_user},tidak di temukan")
 
 def tampilkan_semua_user_serta_order():
-    data = get_all_order()
+    data = get_all_user_and_order()
     user = 'kosong'
     for indx,i in enumerate(data):
         if i[0] != user :
             user = i[0]
-            print(f"\n{indx+1}. User: {user}")
+            print(f"\n{indx+1}. User: {user}, ID: {i[2]}")
     
         if not (i[1] is None):
-            print(f"- {i[1]} ({i[3]})")
+            print(f"  - {i[1]} ({i[3]})")
         else:
-            print("- Tidak ada orderan")
+            print("  - Tidak ada orderan")
 
+def tampilkan_data_user_yang_order():
+    data = get_order()
+    user = 'kosong'
+    for indx,i in enumerate(data):
+        if i[0] != user :
+            user = i[0]
+            print(f"\n{indx+1}. User: {user}, ID: {i[2]}")
+
+        print(f"  - {i[1]} ({i[3]})")
 
 def main():
     while True:
@@ -126,7 +135,7 @@ def main():
         elif pilihan == '6':
             tampilkan_semua_user_serta_order()
         elif pilihan == '7':
-            pass
+            tampilkan_data_user_yang_order()
         elif pilihan == '8':
             pass
         elif pilihan == '9':
