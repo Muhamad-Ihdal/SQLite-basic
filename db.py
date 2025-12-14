@@ -72,7 +72,7 @@ def get_all_user_and_order():
     cursor = conn.cursor()
     cursor.execute("PRAGMA foreign_keys = ON;")
     cursor.execute("""
-SELECT users.name, orders.produck_name,orders.user_id,orders.price
+SELECT users.name, orders.produck_name,users.id,orders.price,orders.id
 FROM users
 LEFT JOIN orders ON orders.user_id = users.id
 """)
@@ -87,7 +87,7 @@ def get_order():
     cursor.execute("PRAGMA foreign_keys = ON;")
 
     cursor.execute("""
-SELECT users.name,orders.produck_name,orders.user_id,orders.price,orders.id
+SELECT users.name,orders.produck_name,users.id,orders.price,orders.id
 FROM users
 INNER JOIN orders ON orders.user_id = users.id
 """)

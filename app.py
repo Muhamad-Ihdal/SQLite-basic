@@ -95,7 +95,7 @@ def tampilkan_semua_user_serta_order():
             print(f"\n{indx+1}. User: {user}, ID: {i[2]}")
     
         if not (i[1] is None):
-            print(f"  - {i[1]} ({i[3]})")
+            print(f"  - {i[1]} ({i[3]}), id_order: {i[4]}")
         else:
             print("  - Tidak ada orderan")
 
