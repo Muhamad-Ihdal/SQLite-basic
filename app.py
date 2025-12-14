@@ -1,4 +1,4 @@
-from db import creat_table,add_user,get_users,delete_user,update_user,add_order,get_all_user_and_order,get_order
+from db import creat_table,add_user,get_users,delete_user,update_user,add_order,get_all_user_and_order,get_order,delete_order
 creat_table()
 def normal(text:str):
     return text.strip().lower()
@@ -14,10 +14,12 @@ def input_angka(teks="Masukan angka: "):
             return int(angka)
         gavalid()
 def input_str(teks="Masukan teks: "):
-    x = input(f"{teks}")
-    if x.strip() == '':
-        return None
-    return x
+    while True:
+        x = input(f"{teks}")
+        if x.strip() == '':
+            gavalid()
+            continue
+        return x
 
                 
 def tambah_user():
@@ -105,7 +107,17 @@ def tampilkan_data_user_yang_order():
             user = i[0]
             print(f"\n{indx+1}. User: {user}, ID: {i[2]}")
 
-        print(f"  - {i[1]} ({i[3]})")
+        print(f"  - {i[1]} ({i[3]}), id_order: {i[4]}")
+
+def menghapus_data_orderan():
+    id_orderan = input_angka("Masukan id orderan yang ingin di hapus: ")
+
+    keberhasilan = delete_order(id_orderan)
+    if keberhasilan:
+        print("--- data order berhasil di hapus")
+    else:
+        print(f"data order dengan id: {id_orderan},tidak di temukan")
+
 
 def main():
     while True:
@@ -137,7 +149,7 @@ def main():
         elif pilihan == '7':
             tampilkan_data_user_yang_order()
         elif pilihan == '8':
-            pass
+            menghapus_data_orderan()
         elif pilihan == '9':
             return
         else:
