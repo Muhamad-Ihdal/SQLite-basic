@@ -1,4 +1,4 @@
-from db import creat_table,add_user,get_users,delete_user,update_user
+from db import creat_table,add_user,get_users,delete_user,update_user,add_order
 creat_table()
 def normal(text:str):
     return text.strip().lower()
@@ -13,6 +13,10 @@ def input_angka(teks="Masukan angka: "):
         if angka.isdigit():
             return int(angka)
         gavalid()
+def input_str(teks="Masukan teks: "):
+    if teks.strip() == '':
+        return None
+    return teks
 
                 
 def tambah_user():
@@ -65,6 +69,21 @@ def hapus_user():
     else:
         print(f"data user dengan id: {id_user},tidak di temukan")
 
+def tambah_orderan():
+    id_user = input_angka("Masukan id user yang melakukan order: ")
+    produk = input_str("Masukan nama produk: ")
+    price = input_angka("Masukan harga produk: ")
+    if produk is None:
+        print("Masukan nama produk terlebih dulu ")
+        return
+    
+    keberhasilan = add_order(id_user,produk,price)
+    if keberhasilan:
+        print("--- data order berhasil di buat")
+    else:
+        print(f"data user dengan id: {id_user},tidak di temukan")
+
+
 def main():
     while True:
         print("""
@@ -75,6 +94,7 @@ def main():
 5. Tambah orderan
 6. Tampilkan semua user serta orderannya
 7. Tampilkan semua data user yang memiliki orderan
+8. Hapus orderan
 8. Keluar
     """)
         pilihan = normal(input("Input pilihan: "))

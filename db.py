@@ -5,6 +5,7 @@ import sqlite3
 def creat_table(): 
     conn = sqlite3.connect("users.db")
     cursor = conn.cursor()
+    cursor.execute("PRAGMA foreign_keys = ON;")
 
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS users(
@@ -33,6 +34,7 @@ def add_user(name,email):
     conn = sqlite3.connect("users.db")
     cursor = conn.cursor()
 
+
     try:
         cursor.execute(
             "INSERT INTO users (name,email) VALUES (?,?)",
@@ -47,6 +49,25 @@ def add_user(name,email):
     conn.close()
     return 1
 
+
+def add_order(user_id,product_name,price):
+    conn = sqlite3.connect("users.db")
+    cursor = conn.cursor()
+    cursor.execute("PRAGMA foreign_keys = ON;")
+
+    try:
+        cursor.execute(
+            "INSERT INTO orders (user_id,product_name,price) VALUES (?,?,?)",
+            (user_id,product_name,price)
+        )
+    except sqlite3.IntegrityError:
+        conn.commit()
+        conn.close()
+        return 0
+
+    conn.commit()
+    conn.close()
+    return 1
 
 
 def get_users():
