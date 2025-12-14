@@ -37,6 +37,7 @@ def tambah_user():
 def tampilkan_users():
     data_users = get_users()
     print("")
+    print("----------------------")
     for i in data_users:
         print(f"ID: {i[0]}")
         print(f"User: {i[1]}")
@@ -71,7 +72,10 @@ def main():
 2. Lihat semua user
 3. Update user
 4. Hapus user
-5. Keluar
+5. Tambah orderan
+6. Tampilkan semua user serta orderannya
+7. Tampilkan semua data user yang memiliki orderan
+8. Keluar
     """)
         pilihan = normal(input("Input pilihan: "))
 
@@ -84,6 +88,12 @@ def main():
         elif pilihan == '4':
             hapus_user()
         elif pilihan == '5':
+            pass
+        elif pilihan == '6':
+            pass
+        elif pilihan == '7':
+            pass
+        elif pilihan == '8':
             return
         else:
             gavalid()

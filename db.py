@@ -18,7 +18,7 @@ def creat_table():
     CREATE TABLE IF NOT EXISTS orders(
         id INTEGER PRIMARY KEY,
         produck_name TEXT NOT NULL,
-        price TEXT NOT NULL,
+        price INTEGER NOT NULL,
         user_id INTEGER,
         FOREIGN KEY (user_id) REFERENCES users(id)
                     )
